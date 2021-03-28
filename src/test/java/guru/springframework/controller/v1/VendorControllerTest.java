@@ -66,12 +66,12 @@ public class VendorControllerTest extends AbstractRestControllerTest{
 
         given(vendorService.getVendorById(anyLong())).willReturn(vendorDTO_1);
 
-        verify(vendorService).getVendorById(anyLong());
-
         mockMvc.perform(get("/api/v1/vendors/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(vendorDTO_1.getName())));
+
+        verify(vendorService).getVendorById(anyLong());
     }
 
     @Test

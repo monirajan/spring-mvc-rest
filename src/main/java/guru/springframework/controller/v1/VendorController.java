@@ -4,7 +4,6 @@ import guru.springframework.api.v1.model.VendorDTO;
 import guru.springframework.api.v1.model.VendorListDTO;
 import guru.springframework.services.VendorService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,29 +22,30 @@ public class VendorController {
     }
 
     @GetMapping("/api/v1/vendors/{id}")
-    public ResponseEntity<VendorDTO> getVendorById(@PathVariable Long id){
-        return new ResponseEntity<VendorDTO>(vendorService.getVendorById(id),HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public VendorDTO getVendorById(@PathVariable Long id){
+        return vendorService.getVendorById(id);
     }
 
-    @PostMapping
+    @PostMapping("/api/v1/vendors/")
     @ResponseStatus(HttpStatus.CREATED)
     public VendorDTO createNewVendor(@RequestBody VendorDTO vendorDTO){
         return vendorService.createVendor(vendorDTO);
     }
 
-    @PutMapping({"{/id}"})
+    @PutMapping("/api/v1/vendors/{id}")
     @ResponseStatus(HttpStatus.OK)
     public VendorDTO updateExistingVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO){
         return vendorService.updateVendor(id,vendorDTO);
     }
 
-    @PatchMapping({"{/id}"})
+    @PatchMapping("/api/v1/vendors/{id}")
     @ResponseStatus(HttpStatus.OK)
     public VendorDTO patchVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO){
         return vendorService.patchVendor(id,vendorDTO);
     }
 
-    @DeleteMapping({"{/id}"})
+    @DeleteMapping("/api/v1/vendors/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteVendor(@PathVariable Long id){
         vendorService.deleteVendor(id);
